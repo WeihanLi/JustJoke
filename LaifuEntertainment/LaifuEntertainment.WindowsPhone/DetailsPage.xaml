@@ -1,0 +1,34 @@
+﻿<Page
+    x:Class="LaifuEntertainment.DetailsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:LaifuEntertainment"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Background="{StaticResource primaryColor}">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Image Source="/Assets/Logo.scale-240.png" Height="60" Margin="10"/>
+                <TextBlock x:Uid="JokesHeader" Style="{StaticResource HeaderTextBlockStyle}" Margin="10,4">Jokes</TextBlock>
+            </StackPanel>
+            <ScrollViewer Name="contentViewer" Height="470" Padding="10" VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <TextBlock Margin="10" Style="{StaticResource TitleTextBlockStyle}" Text="{Binding title}"></TextBlock>
+                    <TextBlock Margin="15" Style="{StaticResource BodyTextBlockStyle}" Text="{Binding content}" TextWrapping="Wrap"></TextBlock>
+                </StackPanel>
+            </ScrollViewer>
+        </StackPanel>
+    </Grid>
+    <Page.BottomAppBar>
+        <CommandBar Foreground="White" Background="{StaticResource primaryColor}">
+            <CommandBar.PrimaryCommands>
+                <AppBarButton x:Name="appbarHome" x:Uid="Home" Icon="Home" Label="Home" Tag="Home" Click="appbarHome_Click"/>
+                <AppBarButton x:Name="appbarSpeech" x:Uid="Speech" Icon="Microphone" Label="Speech" Tag="Speech" Click="appbarSpeech_Click"/>
+                <AppBarButton x:Name="appbarSettings" x:Uid="Settings" Icon="Setting" Label="Settings" Tag="Settings" Click="appbarSettings_Click"/>
+            </CommandBar.PrimaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
+</Page>

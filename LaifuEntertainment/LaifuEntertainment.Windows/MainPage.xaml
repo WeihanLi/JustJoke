@@ -1,0 +1,30 @@
+﻿<Page
+    x:Class="LaifuEntertainment.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:LaifuEntertainment"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{StaticResource primaryColor}">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Image Source="/Assets/Logo.scale-240.png" Height="60" Margin="10"/>
+                <TextBlock x:Uid="JokesHeader" Style="{StaticResource HeaderTextBlockStyle}" Margin="10,4">Jokes</TextBlock>
+            </StackPanel>
+            <ProgressBar Name="progressRing" Height="20" Background="{StaticResource primaryColor}" IsEnabled="True" Visibility="Collapsed" IsIndeterminate="True" />
+            <ScrollViewer Name="contentViewer" Height="470" Width="480" Padding="10" VerticalScrollBarVisibility="Auto">
+                <ListView Name="lvJokes" IsItemClickEnabled="True"  ItemClick="lvJokes_ItemClick" HorizontalAlignment="Left" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollMode="Auto">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Margin="12" Style="{StaticResource TitleTextBlockStyle}" Text="{Binding title}"></TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </ScrollViewer>
+        </StackPanel>
+    </Grid>
+</Page>

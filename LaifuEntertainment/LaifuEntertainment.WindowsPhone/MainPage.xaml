@@ -1,0 +1,53 @@
+﻿<Page
+    x:Class="LaifuEntertainment.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:LaifuEntertainment"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+            <Storyboard x:Name="tip">
+                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="borTip" Storyboard.TargetProperty="Opacity">
+                    <EasingDoubleKeyFrame KeyTime="00:00:00" Value="0.4"></EasingDoubleKeyFrame>
+                    <EasingDoubleKeyFrame KeyTime="00:00:01" Value="1"></EasingDoubleKeyFrame>
+                    <EasingDoubleKeyFrame KeyTime="00:00:02" Value="0.6"></EasingDoubleKeyFrame>
+                    <EasingDoubleKeyFrame KeyTime="00:00:03" Value="0"></EasingDoubleKeyFrame>
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+    </Page.Resources>
+    <Grid Background="{StaticResource primaryColor}">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Image Source="/Assets/Logo.scale-240.png" Height="60" Margin="10"/>
+                <TextBlock x:Uid="JokesHeader" Style="{StaticResource HeaderTextBlockStyle}" Margin="10,4">Jokes</TextBlock>
+            </StackPanel>
+            <ProgressBar Name="progressRing" Height="20" Background="{StaticResource primaryColor}" IsEnabled="True" Visibility="Collapsed" IsIndeterminate="True"  />
+            <Popup Name="Tip" IsOpen="False" HorizontalOffset="80" VerticalOffset="200">
+                <Border Name="borTip" Opacity="0" Background="Black">
+                    <TextBlock Name="tipText" Foreground="White" HorizontalAlignment="Stretch" Style="{StaticResource bigFont}" x:Uid="ExitTip" Text="Press again to exit "/>
+                </Border>
+            </Popup>
+            <ScrollViewer Name="contentViewer" Height="470" Width="480" Padding="10" VerticalScrollBarVisibility="Auto">
+                <ListView Name="lvJokes" IsItemClickEnabled="True"  ItemClick="lvJokes_ItemClick" HorizontalAlignment="Left" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollMode="Auto">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Margin="12" Style="{StaticResource TitleTextBlockStyle}" Text="{Binding title}"></TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            </ScrollViewer>
+        </StackPanel>
+    </Grid>
+    <Page.BottomAppBar>
+        <CommandBar x:Name="commandBar" Foreground="White" Background="{StaticResource primaryColor}">
+            <CommandBar.PrimaryCommands>
+                <AppBarButton x:Name="appbarRefresh" x:Uid="Refresh" Icon="Refresh" Label="Refresh" Tag="Refresh" Click="btnRefresh_Click"/>
+                <AppBarButton x:Name="appbarSettings" x:Uid="Settings" Icon="Setting" Label="Settings" Tag="Settings" Click="appbarSettings_Click"/>
+            </CommandBar.PrimaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
+</Page>
