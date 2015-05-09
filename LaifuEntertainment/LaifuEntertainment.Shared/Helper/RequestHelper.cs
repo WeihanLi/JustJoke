@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage;
 
 namespace LaifuEntertainment.Helper
 {
@@ -24,10 +25,50 @@ namespace LaifuEntertainment.Helper
             {
                 return null;
             }
-            //
+            //设置本地存储
+            //await SetLocalData(response);
+            //将json字符串转换为对象
             List<Models.JokeModel> jokes = Helper.ConverterHelper.JsonToObj<List<Models.JokeModel>>(response);
-            //
             return jokes;
+        }
+
+        public async void RequestJokes()
+        {
+            string response = await DoGetRequestAsync(jokeUrl);
+            //设置本地存储
+            await SetLocalData(response);
+        }
+
+        public async Task SetLocalData(string content)
+        {
+            StorageFile file = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync("jokes.json");
+            if (file != null)
+            {
+                    if (!String.IsNullOrEmpty(content))
+                    {
+                        await FileIO.WriteTextAsync(file, content);
+                    }
+            }
+        }
+
+        /// <summary>
+        /// 加载本地数据
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<Models.JokeModel>> LoadLocalJokesData()
+        {
+            StorageFile file = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync("jokes.json");
+            if (file != null)
+            {
+                string fileContent = await FileIO.ReadTextAsync(file);
+                //将json字符串转换为对象
+                List<Models.JokeModel> jokes = Helper.ConverterHelper.JsonToObj<List<Models.JokeModel>>(fileContent);
+                return jokes;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public async Task<List<Models.PicModel>> LoadPics()

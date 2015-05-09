@@ -156,4 +156,7 @@
   <data name="ExitTip.Text" xml:space="preserve">
     <value>再按一次后退键退出</value>
   </data>
+  <data name="DisplayName" xml:space="preserve">
+    <value>开心一哈</value>
+  </data>
 </root>

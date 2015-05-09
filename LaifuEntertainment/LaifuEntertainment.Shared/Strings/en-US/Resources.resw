@@ -156,4 +156,7 @@
   <data name="ExitTip.Text" xml:space="preserve">
     <value>Press again to exit</value>
   </data>
+  <data name="DisplayName" xml:space="preserve">
+    <value>JustLaugh</value>
+  </data>
 </root>
