@@ -12,7 +12,7 @@ namespace LaifuEntertainment
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private static List<Models.JokeModel> jokes=null;
+        public static List<Models.JokeModel> jokes=null;
 
         public MainPage()
         {
@@ -39,16 +39,23 @@ namespace LaifuEntertainment
         private async void InitDataSource()
         {
             progressRing.Visibility = Windows.UI.Xaml.Visibility.Visible;
-            await System.Threading.Tasks.Task.Delay(2000);
+            
+            Helper.RequestHelper helper = new Helper.RequestHelper();
             if (Helper.NetworkHelper.IsNetworkAvailable())
             {
-                jokes = await new Helper.RequestHelper().LoadJokes();
-                lvJokes.ItemsSource = jokes;
+                jokes = await helper.LoadJokes();
             }
             else
             {
-                await new Windows.UI.Popups.MessageDialog("当前网络不可用~~").ShowAsync();
+                string tip = "The internet is not available now";
+                if (!System.Globalization.CultureInfo.CurrentCulture.DisplayName.Contains("en"))
+                {
+                    tip = "当前网络不可用，将加载本地数据";
+                }
+                await new Windows.UI.Popups.MessageDialog(tip).ShowAsync();
+                jokes = await helper.LoadLocalJokesData();
             }
+            lvJokes.ItemsSource = jokes;
             progressRing.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
         }
 

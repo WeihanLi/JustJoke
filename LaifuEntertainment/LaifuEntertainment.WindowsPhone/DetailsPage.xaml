@@ -9,24 +9,28 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid Background="{StaticResource primaryColor}">
-        <StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
             <StackPanel Orientation="Horizontal">
                 <Image Source="/Assets/Logo.scale-240.png" Height="60" Margin="10"/>
                 <TextBlock x:Uid="JokesHeader" Style="{StaticResource HeaderTextBlockStyle}" Margin="10,4">Jokes</TextBlock>
             </StackPanel>
-            <ScrollViewer Name="contentViewer" Height="470" Padding="10" VerticalScrollBarVisibility="Auto">
+            <ScrollViewer Grid.Row="1" Name="contentViewer" Height="470" Padding="10" VerticalScrollBarVisibility="Auto">
                 <StackPanel>
                     <TextBlock Margin="10" Style="{StaticResource TitleTextBlockStyle}" Text="{Binding title}"></TextBlock>
                     <TextBlock Margin="15" Style="{StaticResource BodyTextBlockStyle}" Text="{Binding content}" TextWrapping="Wrap"></TextBlock>
                 </StackPanel>
             </ScrollViewer>
-        </StackPanel>
+        
     </Grid>
     <Page.BottomAppBar>
         <CommandBar Foreground="White" Background="{StaticResource primaryColor}">
             <CommandBar.PrimaryCommands>
-                <AppBarButton x:Name="appbarHome" x:Uid="Home" Icon="Home" Label="Home" Tag="Home" Click="appbarHome_Click"/>
                 <AppBarButton x:Name="appbarSpeech" x:Uid="Speech" Icon="Microphone" Label="Speech" Tag="Speech" Click="appbarSpeech_Click"/>
+                <AppBarButton x:Name="appbarBack" x:Uid="Back" Icon="Back" Label="Previous" Tag="Previous" Click="appbarHome_Click"/>
+                <AppBarButton x:Name="appbarForward" x:Uid="Forward" Icon="Forward" Label="Next" Tag="Next" Click="appbarHome_Click"/>
                 <AppBarButton x:Name="appbarSettings" x:Uid="Settings" Icon="Setting" Label="Settings" Tag="Settings" Click="appbarSettings_Click"/>
             </CommandBar.PrimaryCommands>
         </CommandBar>

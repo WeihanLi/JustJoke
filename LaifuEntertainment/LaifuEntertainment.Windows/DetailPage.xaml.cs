@@ -1,4 +1,6 @@
 ﻿using LaifuEntertainment.Common;
+using System;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -12,17 +14,12 @@ namespace LaifuEntertainment
     /// </summary>
     public sealed partial class DetailPage : Page
     {
+        private static MediaElement media = null;
         private static string jokeContent = null;
         private NavigationHelper navigationHelper;
-        private ObservableDictionary defaultViewModel = new ObservableDictionary();
+        private static Models.JokeModel joke = null;
+        private static int index = -1, maxIndex = MainPage.jokes.Count - 1;
 
-        /// <summary>
-        /// This can be changed to a strongly typed view model.
-        /// </summary>
-        public ObservableDictionary DefaultViewModel
-        {
-            get { return this.defaultViewModel; }
-        }
 
         /// <summary>
         /// NavigationHelper is used on each page to aid in navigation and 
@@ -37,59 +34,75 @@ namespace LaifuEntertainment
         {
             this.InitializeComponent();
             this.navigationHelper = new NavigationHelper(this);
-            this.navigationHelper.LoadState += navigationHelper_LoadState;
         }
 
         /// <summary>
-        /// Populates the page with content passed during navigation.  Any saved state is also
-        /// provided when recreating a page from a prior session.
+        /// Invoked when this page is about to be displayed in a Frame.
         /// </summary>
-        /// <param name="sender">
-        /// The source of the event; typically <see cref="Common.NavigationHelper"/>
-        /// </param>
-        /// <param name="e">Event data that provides both the navigation parameter passed to
-        /// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested and
-        /// a dictionary of state preserved by this page during an earlier
-        /// session.  The state will be null the first time a page is visited.</param>
-        private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
-        {
-            object navigationParameter;
-            if (e.PageState != null && e.PageState.ContainsKey("SelectedItem"))
-            {
-                navigationParameter = e.PageState["SelectedItem"];
-            }
-
-            // TODO: Assign a bindable group to this.DefaultViewModel["Group"]
-            // TODO: Assign a collection of bindable items to this.DefaultViewModel["Items"]
-            // TODO: Assign the selected item to this.flipView.SelectedItem
-        }
-
-        #region NavigationHelper registration
-
-        /// The methods provided in this section are simply used to allow
-        /// NavigationHelper to respond to the page's navigation methods.
-        /// 
-        /// Page specific logic should be placed in event handlers for the  
-        /// <see cref="Common.NavigationHelper.LoadState"/>
-        /// and <see cref="Common.NavigationHelper.SaveState"/>.
-        /// The navigation parameter is available in the LoadState method 
-        /// in addition to page state preserved during an earlier session.
-
+        /// <param name="e">Event data that describes how this page was reached.
+        /// This parameter is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            Models.JokeModel joke = e.Parameter as Models.JokeModel;
+            joke = e.Parameter as Models.JokeModel;
             contentViewer.DataContext = joke;
-            jokeContent = joke.title + "    " + joke.content;
-            navigationHelper.OnNavigatedTo(e);
+            jokeContent = joke.content;
+            index = MainPage.jokes.IndexOf(joke);
+            if (index == -1)
+            {
+                throw new ArgumentException("参数错误");
+            }
+            //if (index == 0)
+            //{
+            //    appbarBack.IsEnabled = false;
+            //}
+            //else
+            //{
+            //    appbarBack.IsEnabled = true;
+            //}
+            //if (index == maxIndex)
+            //{
+            //    appbarForward.IsEnabled = false;
+            //}
+            //else
+            //{
+            //    appbarForward.IsEnabled = true;
+            //}
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            navigationHelper.OnNavigatedFrom(e);
+            if (media != null)
+            {
+                media.Stop();
+            }
+            base.OnNavigatedFrom(e);
         }
 
-        #endregion
+        private void btnSpeak_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            TextToSpeech(jokeContent);
+        }
 
+        private async void TextToSpeech(string text)
+        {
+            media = new MediaElement();
+            media.AutoPlay = true;
+            media.Volume = 100;
+            media.SetSource(await Helper.SpeechHelper.GetSpeechStream(text), "audio/mpeg");
+            media.CurrentStateChanged += Media_CurrentStateChanged;
+            media.Play();
+        }
 
+        private void Media_CurrentStateChanged(object sender, RoutedEventArgs e)
+        {
+            if (media.CurrentState == Windows.UI.Xaml.Media.MediaElementState.Playing)
+            {
+                btnSpeak.IsEnabled = false;
+            }
+            else
+            {
+                btnSpeak.IsEnabled = true;
+            }
+        }
     }
 }

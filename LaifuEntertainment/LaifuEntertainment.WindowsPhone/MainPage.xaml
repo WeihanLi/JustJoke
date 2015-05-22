@@ -18,6 +18,10 @@
             </Storyboard>
     </Page.Resources>
     <Grid Background="{StaticResource primaryColor}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
         <StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Image Source="/Assets/Logo.scale-240.png" Height="60" Margin="10"/>
@@ -29,8 +33,9 @@
                     <TextBlock Name="tipText" Foreground="White" HorizontalAlignment="Stretch" Style="{StaticResource bigFont}" x:Uid="ExitTip" Text="Press again to exit "/>
                 </Border>
             </Popup>
-            <ScrollViewer Name="contentViewer" Height="470" Width="480" Padding="10" VerticalScrollBarVisibility="Auto">
-                <ListView Name="lvJokes" IsItemClickEnabled="True"  ItemClick="lvJokes_ItemClick" HorizontalAlignment="Left" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollMode="Auto">
+        </StackPanel>
+        <ScrollViewer Grid.Row="1" Name="contentViewer" Padding="10" VerticalScrollBarVisibility="Auto">
+            <ListView Name="lvJokes" IsItemClickEnabled="True"  ItemClick="lvJokes_ItemClick" HorizontalAlignment="Left" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollMode="Auto">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
@@ -39,8 +44,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            </ScrollViewer>
-        </StackPanel>
+        </ScrollViewer>
     </Grid>
     <Page.BottomAppBar>
         <CommandBar x:Name="commandBar" Foreground="White" Background="{StaticResource primaryColor}">

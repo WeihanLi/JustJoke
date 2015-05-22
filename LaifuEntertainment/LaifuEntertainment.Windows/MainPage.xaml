@@ -8,13 +8,18 @@
     mc:Ignorable="d">
 
     <Grid Background="{StaticResource primaryColor}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
         <StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Image Source="/Assets/Logo.scale-240.png" Height="60" Margin="10"/>
                 <TextBlock x:Uid="JokesHeader" Style="{StaticResource HeaderTextBlockStyle}" Margin="10,4">Jokes</TextBlock>
             </StackPanel>
             <ProgressBar Name="progressRing" Height="20" Background="{StaticResource primaryColor}" IsEnabled="True" Visibility="Collapsed" IsIndeterminate="True" />
-            <ScrollViewer Name="contentViewer" Height="470" Width="480" Padding="10" VerticalScrollBarVisibility="Auto">
+        </StackPanel>
+        <ScrollViewer Grid.Row="1" Padding="30" Name="contentViewer" VerticalScrollBarVisibility="Auto">
                 <ListView Name="lvJokes" IsItemClickEnabled="True"  ItemClick="lvJokes_ItemClick" HorizontalAlignment="Left" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollMode="Auto">
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -25,6 +30,6 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </ScrollViewer>
-        </StackPanel>
+        
     </Grid>
 </Page>

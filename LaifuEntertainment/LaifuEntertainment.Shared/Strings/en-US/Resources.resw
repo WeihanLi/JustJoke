@@ -132,8 +132,8 @@
   <data name="Feedback.Content" xml:space="preserve">
     <value>Feedback</value>
   </data>
-  <data name="Home.Label" xml:space="preserve">
-    <value>Home</value>
+  <data name="Back.Label" xml:space="preserve">
+    <value>Previous</value>
   </data>
   <data name="Rate.Content" xml:space="preserve">
     <value>RateApp</value>
@@ -158,5 +158,8 @@
   </data>
   <data name="DisplayName" xml:space="preserve">
     <value>JustLaugh</value>
+  </data>
+  <data name="Forward.Label" xml:space="preserve">
+    <value>Next</value>
   </data>
 </root>

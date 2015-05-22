@@ -14,7 +14,7 @@ namespace LaifuEntertainment
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private static List<Models.JokeModel> jokes = null;
+        public static List<Models.JokeModel> jokes = null;
         private static DateTime now=DateTime.Now;
         private static bool bExit=false;
 
@@ -61,7 +61,6 @@ namespace LaifuEntertainment
             }
         }
 
-
         /// <summary>
         /// 首次进入本页加载内容
         /// </summary>
@@ -80,7 +79,6 @@ namespace LaifuEntertainment
         private async void InitDataSource()
         {
             progressRing.Visibility = Windows.UI.Xaml.Visibility.Visible;
-            //await System.Threading.Tasks.Task.Delay(2000);
             Helper.RequestHelper helper = new Helper.RequestHelper();
             if (Helper.NetworkHelper.IsNetworkAvailable())
             {

@@ -31,14 +31,16 @@
                   to show details for the current item
         -->
         <Grid Grid.Row="1" x:Name="contentRegion">
-            <StackPanel>
-            <ScrollViewer Name="contentViewer" Height="470" Padding="10" VerticalScrollBarVisibility="Auto">
+            <ScrollViewer Name="contentViewer"  Padding="10" VerticalScrollBarVisibility="Auto">
                 <StackPanel>
                     <TextBlock Margin="10" Style="{StaticResource TitleTextBlockStyle}" Text="{Binding title}"></TextBlock>
                     <TextBlock Margin="15" Style="{StaticResource BodyTextBlockStyle}" Text="{Binding content}" TextWrapping="Wrap"></TextBlock>
+                        <Button Name="btnSpeak" HorizontalAlignment="Left" BorderThickness="2" Margin="12" Click="btnSpeak_Click" Padding="16">
+                            <SymbolIcon Symbol="Microphone">
+                            </SymbolIcon>
+                        </Button>
                 </StackPanel>
             </ScrollViewer>
-        </StackPanel>
         </Grid>
         
         <!-- Back button and page title -->
